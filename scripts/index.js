@@ -1,5 +1,4 @@
-// require express, mysql2, and inquirer
-// import cli.js
+// require express, mysql2
 
 // port?
 
@@ -7,3 +6,5 @@
 
 // querys
 
+// export
+module.exports(sql)

@@ -1,4 +1,13 @@
-// questions to be asked in cli
+// require mysql2
+const mysql = require('mysql2');
+
+// create the connection to database
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    database: 'test'
+  });
+
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 let viewDepartments 
 let viewRoles
@@ -19,14 +28,15 @@ let deleteEmployee
 let viewDepartmentBudge
 
 */
-const questions = [
-    {
-        type: 'list',
-        name: 'questions',
-        message: 'Welcome! What would you like to do?',
-        choices: ['View all departments.','View all roles.','Add a department.','Add a role.','Add an employee.','Update an employee\'s role.' ],
-    }
-];
 
+const choices = [
+    viewDepartments,
+    viewRoles,
+    viewEmployees,
+    addDepartment,
+    addRole,
+    addEmployee,
+    updateEmployeeRole
+]
 
-module.exports(questions);
+module.exports(choices)
