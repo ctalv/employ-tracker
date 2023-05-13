@@ -20,6 +20,11 @@ let viewDepartmentBudge
 
 */
 const questions = [
-    
+    {
+        type: 'list',
+        name: 'questions',
+        message: 'Welcome! What would you like to do?',
+        choices: ['View all departments.','View all roles.','Add a department.','Add a role.','Add an employee.','Update an employee\'s role.' ],
+    }
 ];
 
