@@ -51,7 +51,7 @@ const variables =
 ]
 
 function choices(answers) {
-  let index = questions[0].choices.findIndex(answers);
+  let index = questions[0].choices.indexOf(answers);
 
   variables[index]
 
