@@ -9,6 +9,16 @@ const connection = mysql.createConnection({
     database: 'test'
   });
 
+
+  async function main() {
+    // get the client
+    const mysql = require('mysql2/promise');
+    // create the connection
+    const connection = await mysql.createConnection({host:'localhost', user: 'root', database: 'test'});
+    // query database
+    const [rows, fields] = await connection.execute('SELECT * FROM `table` WHERE `name` = ? AND `age` > ?', ['Morty', 14]);
+  }
+
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 let viewDepartments // sql select
 let viewRoles // sql select

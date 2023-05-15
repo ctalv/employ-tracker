@@ -1,18 +1,10 @@
 // require inquirer
 const inquirer = require('inquirer');
 // import questions scripts/index.js
-// const questions = require('./questions.js')
+
 // const querys = require('./index.js')
 // const sqlLogic = require('./sql.js')
-
-const questions = [
-    {
-        type: 'checkbox',
-        name: 'whatToDo',
-        message: 'Welcome! What would you like to do?',
-        choices: ['View all departments.','View all roles.','Add a department.','Add a role.','Add an employee.','Update an employee\'s role.' ],
-    }
-];
+const questions = require('./questions.js')
 
 // class constructor CLI
     // init
