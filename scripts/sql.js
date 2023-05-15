@@ -1,5 +1,6 @@
 // require mysql2
 const mysql = require('mysql2');
+const questions = require('./questions');
 
 // create the connection to database
 const connection = mysql.createConnection({
@@ -9,13 +10,13 @@ const connection = mysql.createConnection({
   });
 
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
-let viewDepartments 
-let viewRoles
-let viewEmployees
-let addDepartment
-let addRole
-let addEmployee
-let updateEmployeeRole
+let viewDepartments // sql select
+let viewRoles // sql select
+let viewEmployees // sql select
+let addDepartment // sql insert into
+let addRole // sql insert into 
+let addEmployee // sql insert into
+let updateEmployeeRole // sql update?
 
 /* BONUS 
 
@@ -28,8 +29,8 @@ let deleteEmployee
 let viewDepartmentBudge
 
 */
-
-const choices = [
+const variables = 
+ [
     viewDepartments,
     viewRoles,
     viewEmployees,
@@ -38,5 +39,13 @@ const choices = [
     addEmployee,
     updateEmployeeRole
 ]
+
+function choices(answers) {
+  let index = questions.findIndex(answers);
+
+  variables[index]
+
+  
+}
 
 module.exports(choices)
