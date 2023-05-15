@@ -7,4 +7,4 @@
 // querys
 
 // export
-module.exports(sql)
+

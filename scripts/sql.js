@@ -41,11 +41,11 @@ const variables =
 ]
 
 function choices(answers) {
-  let index = questions.findIndex(answers);
+  let index = questions[0].choices.findIndex(answers);
 
   variables[index]
 
   
 }
 
-module.exports(choices)
+module.exports = choices;
