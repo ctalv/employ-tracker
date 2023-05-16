@@ -1,5 +1,0 @@
--- contains functions for performing specific SQL queries you'll need to use --
--- constructor function or class could be helpful for organizing these --
--- want to make your queries asynchronous --
--- MySQL2 exposes a .promise() function on Connections to upgrade an existing --
--- non-Promise connection to use Promises --

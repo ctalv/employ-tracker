@@ -1,10 +1,7 @@
-// require inquirer
+// require inquirer and mysql2
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
-// import questions scripts/index.js
-
-// const querys = require('./index.js')
-// const sqlLogic = require('./sql.js')
+// import questions 
 const [mainQuestions, addDep, addRol, addEmploy, updateEmploy] = require('./questions.js')
 
 const connection = mysql.createPool({
@@ -14,30 +11,17 @@ const connection = mysql.createPool({
     database: 'company_db'
 });
 
-// class constructor CLI
-// init
-// inquirer
+
 
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 let viewDepartments = 'department' // sql select
 let viewRoles = 'role' // sql select
 let viewEmployees = 'employee' // sql select
-let addDepartment = 'department' // = ['department', inquirer.prompt(questions)]// sql insert into
+let addDepartment = 'department' // sql insert into
 let addRole = 'role' // sql insert into 
 let addEmployee = 'employee'// sql insert into
-let updateEmployeeRole = 'employee'; // sql update?
+let updateEmployeeRole = 'employee'; // sql update
 
-/* BONUS 
-
-let updateEmployeeManager
-let viewEmployeesByManager
-let viewEmployeesByDepartment
-let deleteDepartment
-let deleteRole
-let deleteEmployee
-let viewDepartmentBudge
-
-*/
 const variables =
     [
         viewDepartments, // 0
@@ -56,7 +40,7 @@ class CLI {
     init() {
 
 
-        // for (let run = 0; run < 1) {
+
         inquirer
             .prompt(mainQuestions)
             .then((answers) => {
@@ -64,16 +48,14 @@ class CLI {
                 let index = mainQuestions[0].choices.indexOf(answers.whatToDo[0]);
                 let table = variables[index]
 
+                // to view employees, roles, or departments
                 if (index <= 2) {
-
                     connection.promise().query(`SELECT * FROM ${table}`)
                         .then(([rows, fields]) => {
                             return console.table(rows), this.init();
                         })
                         .catch(console.log)
-                    // .then(() => connection.end());
-                    // .then(() => connection.release());
-
+                // to add a department
                 } else if (index === 3) {
                     inquirer
                         .prompt(addDep)
@@ -85,6 +67,7 @@ class CLI {
                                 })
                                 .catch(console.log)
                         })
+                // to add a role
                 } else if (index === 4) {
                     inquirer
                         .prompt(addRol)
@@ -96,6 +79,7 @@ class CLI {
                                 })
                                 .catch(console.log)
                         })
+                // to add an employee
                 } else if (index === 5) {
                     inquirer
                         .prompt(addEmploy)
@@ -108,6 +92,7 @@ class CLI {
                                 })
                                 .catch(console.log)
                         })
+                // to update an employee's role
                 } else if (index === 6) {
                     inquirer
                         .prompt(updateEmploy)
@@ -120,6 +105,7 @@ class CLI {
                                 })
                                 .catch(console.log)
                         })
+                // to exit the application
                 } else if (index === 7) {
                     console.log(`
     THANKS!
@@ -132,11 +118,11 @@ class CLI {
                 console.error(err);
                 console.log(__dirname)
             })
-        // this.init();
+
 
     }
 }
-// }
+
 
 // export CLI
 module.exports = CLI;
