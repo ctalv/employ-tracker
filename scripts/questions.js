@@ -1,6 +1,6 @@
 // questions to be asked in cli
 
-const questions = [
+const mainQuestions = [
     {
         type: 'checkbox',
         name: 'whatToDo',
@@ -9,5 +9,23 @@ const questions = [
     }
 ];
 
+const addDepRol = [
+    {
+        type: 'input',
+        name: 'addSomething',
+        message: '',
+    }
+];
 
-module.exports = questions;
+const addEmploy = [
+    {
+        type: 'input',
+        name: 'addSomething',
+        message: '',
+        }
+];
+
+
+module.exports = [mainQuestions, addDepRol, addEmploy];
+// module.exports = addDepRol;
+// module.exports = addEmploy;

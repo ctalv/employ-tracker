@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 
 // const querys = require('./index.js')
 // const sqlLogic = require('./sql.js')
-const questions = require('./questions.js')
+const [mainQuestions, addDepRol, addEmploy] = require('./questions.js')
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -22,9 +22,9 @@ const connection = mysql.createConnection({
 let viewDepartments = 'department' // sql select
 let viewRoles = 'role' // sql select
 let viewEmployees = 'employee' // sql select
-let addDepartment // sql insert into
-let addRole // sql insert into 
-let addEmployee // sql insert into
+let addDepartment = 'department' // = ['department', inquirer.prompt(questions)]// sql insert into
+let addRole = 'role' // sql insert into 
+let addEmployee = 'employee'// sql insert into
 let updateEmployeeRole // sql update?
 
 /* BONUS 
@@ -40,13 +40,13 @@ let viewDepartmentBudge
 */
 const variables = 
  [
-    viewDepartments,
-    viewRoles,
-    viewEmployees,
-    addDepartment,
-    addRole,
-    addEmployee,
-    updateEmployeeRole
+    viewDepartments, // 0
+    viewRoles, // 1
+    viewEmployees, // 2
+    addDepartment, // 3
+    addRole, // 4
+    addEmployee, // 5
+    updateEmployeeRole // 6
 ]
 
 class CLI {
@@ -55,34 +55,48 @@ class CLI {
     }
     init() {
         inquirer
-            .prompt(questions)
+            .prompt(mainQuestions)
             .then((answers) => {
                 // where is answer in array of choices
                 console.log(answers.whatToDo)
-                console.log(questions[0].choices)
+                console.log(mainQuestions[0].choices)
 
-                let index = questions[0].choices.indexOf(answers.whatToDo[0]);
+                let index = mainQuestions[0].choices.indexOf(answers.whatToDo[0]);
 
                 console.log(variables[index])
 
-                let action = variables[index]
+                let table = variables[index]
                 
                 if (index <= 2) {
 
-                    connection.promise().query(`SELECT * FROM ${action}`)
+                    connection.promise().query(`SELECT * FROM ${table}`)
                     .then(([rows, fields]) => {
                         console.table(rows);
                     })
                     .catch(console.log)
                     .then(() => connection.end());
-                // return console.log(answers)
-
+                
+                } else if (index > 2 && index < 6) {
+                    inquirer
+                    .prompt(addDepRol)
+                    .then((answers) => {
+                    connection.promise().query(`INSERT INTO ${table} ()`)
+                    .then(([rows, fields]) => {
+                        console.table(rows);
+                    })
+                    .catch(console.log)
+                    .then(() => connection.end());
+                })
                 }
+
+                
             })
             .catch((err) => {
                 console.error(err);
                 console.log(__dirname)
             })
+            // this.init();
+            
     }
 }
 

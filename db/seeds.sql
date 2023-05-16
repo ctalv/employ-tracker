@@ -1,6 +1,7 @@
 -- pre-populate database (making the development of individual features much easier) --
 INSERT INTO department (name)
-VALUES ();
+VALUES ('Sales'),
+       ('Engineering');
 
 INSERT INTO role (title, salary, department_id)
 VALUES ();
