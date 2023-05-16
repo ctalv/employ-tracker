@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 
 // const querys = require('./index.js')
 // const sqlLogic = require('./sql.js')
-const [mainQuestions, addDepRol, addEmploy] = require('./questions.js')
+const [mainQuestions, addDep, addRol, addEmploy] = require('./questions.js')
 
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -38,16 +38,16 @@ let deleteEmployee
 let viewDepartmentBudge
 
 */
-const variables = 
- [
-    viewDepartments, // 0
-    viewRoles, // 1
-    viewEmployees, // 2
-    addDepartment, // 3
-    addRole, // 4
-    addEmployee, // 5
-    updateEmployeeRole // 6
-]
+const variables =
+    [
+        viewDepartments, // 0
+        viewRoles, // 1
+        viewEmployees, // 2
+        addDepartment, // 3
+        addRole, // 4
+        addEmployee, // 5
+        updateEmployeeRole // 6
+    ]
 
 class CLI {
     constructor() {
@@ -66,37 +66,60 @@ class CLI {
                 console.log(variables[index])
 
                 let table = variables[index]
-                
+
                 if (index <= 2) {
 
                     connection.promise().query(`SELECT * FROM ${table}`)
-                    .then(([rows, fields]) => {
-                        console.table(rows);
-                    })
-                    .catch(console.log)
-                    .then(() => connection.end());
-                
-                } else if (index > 2 && index < 6) {
+                        .then(([rows, fields]) => {
+                            console.table(rows);
+                        })
+                        .catch(console.log)
+                        .then(() => connection.end());
+
+                } else if (index === 3) {
                     inquirer
-                    .prompt(addDepRol)
-                    .then((answers) => {
-                    connection.promise().query(`INSERT INTO ${table} ()`)
-                    .then(([rows, fields]) => {
-                        console.table(rows);
-                    })
-                    .catch(console.log)
-                    .then(() => connection.end());
-                })
+                        .prompt(addDep)
+                        .then((answers) => {
+                            console.log(answers)
+                            connection.promise().query(`INSERT INTO ${table} (name) VALUES ('${answers.department.toString(',')}')`)
+                                .then(([rows, fields]) => {
+                                    console.table(rows);
+                                })
+                                .catch(console.log)
+                                .then(() => connection.end());
+                        })
+                }  else if (index === 4) {
+                    inquirer
+                        .prompt(addRol)
+                        .then((answers) => {
+                            connection.promise().query(`INSERT INTO ${table} (title, salary, department_id) VALUES (${answers.toString(',')})`)
+                                .then(([rows, fields]) => {
+                                    console.table(rows);
+                                })
+                                .catch(console.log)
+                                .then(() => connection.end());
+                        })
+                } else if (index === 5) {
+                    inquirer
+                        .prompt(addEmploy)
+                        .then((answers) => {
+                            connection.promise().query(`INSERT INTO ${table} (name) VALUES (${answers.toString(',')})`)
+                                .then(([rows, fields]) => {
+                                    console.table(rows);
+                                })
+                                .catch(console.log)
+                                .then(() => connection.end());
+                        })
                 }
 
-                
+
             })
             .catch((err) => {
                 console.error(err);
                 console.log(__dirname)
             })
-            // this.init();
-            
+        // this.init();
+
     }
 }
 

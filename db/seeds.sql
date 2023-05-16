@@ -1,6 +1,7 @@
 INSERT INTO department (name)
 VALUES ('Sales'),
-       ('Engineering');
+       ('Engineering'),
+       ('HR');
 
 INSERT INTO position (title, salary, department_id)
 VALUES ('Sales Lead', 100000, 1),
