@@ -20,8 +20,8 @@ const connection = mysql.createConnection({
 
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 let viewDepartments = 'department' // sql select
-let viewRoles // sql select
-let viewEmployees // sql select
+let viewRoles = 'role' // sql select
+let viewEmployees = 'employee' // sql select
 let addDepartment // sql insert into
 let addRole // sql insert into 
 let addEmployee // sql insert into
@@ -67,9 +67,9 @@ class CLI {
 
                 let action = variables[index]
                 
-                
+                if (index <= 2) {
 
-                connection.promise().query(`SELECT * FROM ${action}`)
+                    connection.promise().query(`SELECT * FROM ${action}`)
                     .then(([rows, fields]) => {
                         console.table(rows);
                     })
@@ -77,6 +77,7 @@ class CLI {
                     .then(() => connection.end());
                 // return console.log(answers)
 
+                }
             })
             .catch((err) => {
                 console.error(err);
