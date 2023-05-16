@@ -80,8 +80,8 @@ class CLI {
                     inquirer
                         .prompt(addDep)
                         .then((answers) => {
-                            console.log(answers)
-                            connection.promise().query(`INSERT INTO ${table} (name) VALUES ('${answers.department.toString(',')}')`)
+                            console.log(table)
+                            connection.promise().query(`INSERT INTO ${table} (name) VALUES ('${answers.department}')`)
                                 .then(([rows, fields]) => {
                                     console.table(rows);
                                 })
@@ -92,7 +92,8 @@ class CLI {
                     inquirer
                         .prompt(addRol)
                         .then((answers) => {
-                            connection.promise().query(`INSERT INTO ${table} (title, salary, department_id) VALUES (${answers.toString(',')})`)
+                            console.log(table)
+                            connection.promise().query(`INSERT INTO ${table} (title, salary, department_id) VALUES ('${answers.title}',${answers.salary},${answers.department})`)
                                 .then(([rows, fields]) => {
                                     console.table(rows);
                                 })
@@ -103,7 +104,9 @@ class CLI {
                     inquirer
                         .prompt(addEmploy)
                         .then((answers) => {
-                            connection.promise().query(`INSERT INTO ${table} (name) VALUES (${answers.toString(',')})`)
+                            console.log(answers)
+                            console.log(table)
+                            connection.promise().query(`INSERT INTO ${table} (first_name, last_name, role_id, manager_id) VALUES ('${answers.firstName}','${answers.lastName}',${answers.role},${answers.manager})`)
                                 .then(([rows, fields]) => {
                                     console.table(rows);
                                 })
