@@ -7,7 +7,7 @@ const mysql = require('mysql2');
 // const sqlLogic = require('./sql.js')
 const [mainQuestions, addDep, addRol, addEmploy] = require('./questions.js')
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
     host: 'localhost',
     user: 'root',
     password: 'welcome2SQL!',
@@ -18,6 +18,7 @@ const connection = mysql.createConnection({
 // init
 // inquirer
 
+
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 let viewDepartments = 'department' // sql select
 let viewRoles = 'role' // sql select
@@ -25,7 +26,8 @@ let viewEmployees = 'employee' // sql select
 let addDepartment = 'department' // = ['department', inquirer.prompt(questions)]// sql insert into
 let addRole = 'role' // sql insert into 
 let addEmployee = 'employee'// sql insert into
-let updateEmployeeRole // sql update?
+let updateEmployeeRole = 'employee'; // sql update?
+
 
 /* BONUS 
 
@@ -54,6 +56,8 @@ class CLI {
 
     }
     init() {
+
+        // for (let run = 0; run < 1) {
         inquirer
             .prompt(mainQuestions)
             .then((answers) => {
@@ -71,10 +75,11 @@ class CLI {
 
                     connection.promise().query(`SELECT * FROM ${table}`)
                         .then(([rows, fields]) => {
-                            console.table(rows);
+                            return console.table(rows), this.init();
                         })
                         .catch(console.log)
-                        .then(() => connection.end());
+                        // .then(() => connection.end());
+                        // .then(() => connection.release());
 
                 } else if (index === 3) {
                     inquirer
@@ -88,7 +93,7 @@ class CLI {
                                 .catch(console.log)
                                 .then(() => connection.end());
                         })
-                }  else if (index === 4) {
+                } else if (index === 4) {
                     inquirer
                         .prompt(addRol)
                         .then((answers) => {
@@ -113,8 +118,11 @@ class CLI {
                                 .catch(console.log)
                                 .then(() => connection.end());
                         })
-                }
+                } else if (index === 6) {
 
+                } else if (index === 7) {
+                    return connection.end()
+                }
 
             })
             .catch((err) => {
@@ -125,6 +133,7 @@ class CLI {
 
     }
 }
+// }
 
 // export CLI
 module.exports = CLI;
