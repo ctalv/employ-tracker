@@ -1,4 +1,5 @@
 package-lock.json
 node_modules
 ideas.md 
-sql.js
+scripts/sql.js
+db/query.js
