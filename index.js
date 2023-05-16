@@ -5,4 +5,7 @@ const CLI = require('./scripts/cli.js')
 const cli = new CLI();
 
 // initiate application 
+console.log(`
+Welcome to Employee Manager!
+`)
 cli.init();

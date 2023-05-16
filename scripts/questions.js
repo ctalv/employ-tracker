@@ -4,7 +4,7 @@ const mainQuestions = [
     {
         type: 'checkbox',
         name: 'whatToDo',
-        message: 'Welcome! What would you like to do?',
+        message: 'What would you like to do?',
         choices: ['View all departments.', 'View all roles.','View all employees.', 'Add a department.', 'Add a role.', 'Add an employee.', 'Update an employee\'s role.','Quit'],
     }
 ];
@@ -58,7 +58,20 @@ const addEmploy = [
     }
 ];
 
+const updateEmploy = [
+    {
+        type: 'input',
+        name: 'id',
+        message: 'Type the employee ID.',
+    },
+    {
+        type: 'input',
+        name: 'role',
+        message: 'Type the role ID.',
+    }
+]
 
-module.exports = [mainQuestions, addDep, addRol, addEmploy];
+
+module.exports = [mainQuestions, addDep, addRol, addEmploy, updateEmploy];
 // module.exports = addDepRol;
 // module.exports = addEmploy;

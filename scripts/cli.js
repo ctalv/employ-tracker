@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 
 // const querys = require('./index.js')
 // const sqlLogic = require('./sql.js')
-const [mainQuestions, addDep, addRol, addEmploy] = require('./questions.js')
+const [mainQuestions, addDep, addRol, addEmploy, updateEmploy] = require('./questions.js')
 
 const connection = mysql.createPool({
     host: 'localhost',
@@ -18,7 +18,6 @@ const connection = mysql.createPool({
 // init
 // inquirer
 
-
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 let viewDepartments = 'department' // sql select
 let viewRoles = 'role' // sql select
@@ -27,7 +26,6 @@ let addDepartment = 'department' // = ['department', inquirer.prompt(questions)]
 let addRole = 'role' // sql insert into 
 let addEmployee = 'employee'// sql insert into
 let updateEmployeeRole = 'employee'; // sql update?
-
 
 /* BONUS 
 
@@ -57,18 +55,13 @@ class CLI {
     }
     init() {
 
+
         // for (let run = 0; run < 1) {
         inquirer
             .prompt(mainQuestions)
             .then((answers) => {
                 // where is answer in array of choices
-                console.log(answers.whatToDo)
-                console.log(mainQuestions[0].choices)
-
                 let index = mainQuestions[0].choices.indexOf(answers.whatToDo[0]);
-
-                console.log(variables[index])
-
                 let table = variables[index]
 
                 if (index <= 2) {
@@ -78,32 +71,30 @@ class CLI {
                             return console.table(rows), this.init();
                         })
                         .catch(console.log)
-                        // .then(() => connection.end());
-                        // .then(() => connection.release());
+                    // .then(() => connection.end());
+                    // .then(() => connection.release());
 
                 } else if (index === 3) {
                     inquirer
                         .prompt(addDep)
                         .then((answers) => {
                             console.log(table)
-                            connection.promise().query(`INSERT INTO ${table} (name) VALUES ('${answers.department}')`)
+                            connection.promise().query(`INSERT INTO ${table} (name) VALUES (?)`, [answers.department])
                                 .then(([rows, fields]) => {
-                                    console.table(rows);
+                                    return console.table(rows), this.init();
                                 })
                                 .catch(console.log)
-                                .then(() => connection.end());
                         })
                 } else if (index === 4) {
                     inquirer
                         .prompt(addRol)
                         .then((answers) => {
                             console.log(table)
-                            connection.promise().query(`INSERT INTO ${table} (title, salary, department_id) VALUES ('${answers.title}',${answers.salary},${answers.department})`)
+                            connection.promise().query(`INSERT INTO ${table} (title, salary, department_id) VALUES (?,?,?)`, [answers.title, answers.salary, answers.department])
                                 .then(([rows, fields]) => {
-                                    console.table(rows);
+                                    return console.table(rows), this.init();
                                 })
                                 .catch(console.log)
-                                .then(() => connection.end());
                         })
                 } else if (index === 5) {
                     inquirer
@@ -111,16 +102,28 @@ class CLI {
                         .then((answers) => {
                             console.log(answers)
                             console.log(table)
-                            connection.promise().query(`INSERT INTO ${table} (first_name, last_name, role_id, manager_id) VALUES ('${answers.firstName}','${answers.lastName}',${answers.role},${answers.manager})`)
+                            connection.promise().query(`INSERT INTO ? (first_name, last_name, role_id, manager_id) VALUES ('?','?',?,?)`, [table, answers.firstName, answers.lastName, answers.role, answers.manager])
                                 .then(([rows, fields]) => {
-                                    console.table(rows);
+                                    return console.table(rows), this.init();
                                 })
                                 .catch(console.log)
-                                .then(() => connection.end());
                         })
                 } else if (index === 6) {
-
+                    inquirer
+                        .prompt(updateEmploy)
+                        .then((answers) => {
+                            console.log(answers)
+                            console.log(table)
+                            connection.promise().query(`UPDATE ${table} SET role_id = ? WHERE id = ? `, [answers.role, answers.id])
+                                .then(([rows, fields]) => {
+                                    return console.table(rows), this.init();
+                                })
+                                .catch(console.log)
+                        })
                 } else if (index === 7) {
+                    console.log(`
+    THANKS!
+                    `)
                     return connection.end()
                 }
 
