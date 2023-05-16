@@ -34,20 +34,22 @@ Future development:
 ## Usage
 To use this application, you must:
 1. Download this repositiory to your local machine.
-2. In the terminal, download the dependencies: 
-
-        npm i 
-3. In the terminal, type:
+2. In the terminal, launch mysql by typing:
 
         mysql -u root -p
-4. Enter your local password.
-5. Input the following:
+3. Enter your local password.
+4. Input the following:
 
-        source db/schema.sql; source schema.sql
-6. Open a new terminal and type the following:
+        source db/schema.sql; source db/seeds.sql;
+5. Open a new terminal and download the dependencies by typing: 
+
+        npm i
+6. To run the app, type:
 
         node index.js
 7. Answer the questions.
+
+[DEMO Employee Tracker.webm](https://github.com/ctalv/employee-tracker/assets/122413805/daed602e-191c-4af0-a0ec-bd6bd90d0a5e)
 
  
 ## Credits
